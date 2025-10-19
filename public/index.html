@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="description" content="나이와 성별을 기반으로 한 암 발생확률 및 사망원인별 확률 계산기">
+    <meta name="keywords" content="암확률, 사망확률, 생명표, 위험인자, 건강계산기">
+    <title>건강계산기</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>건강계산기</h1>
+            <p>나이와 성별을 입력하여 각종 암 발생확률과 사망원인별 발생확률을 확인하세요</p>
+        </header>
+
+        <main>
+            <!-- 입력 섹션 -->
+            <section class="input-section">
+                <h2>개인정보 입력</h2>
+                <div class="input-group">
+                    <label for="age">나이:</label>
+                    <input type="number" id="age" name="age" min="0" max="120" placeholder="나이를 입력하세요">
+                </div>
+                <div class="input-group">
+                    <label for="gender">성별:</label>
+                    <select id="gender" name="gender">
+                        <option value="">성별을 선택하세요</option>
+                        <option value="male">남성</option>
+                        <option value="female">여성</option>
+                    </select>
+                </div>
+                
+                
+                <!-- 위험인자 선택 옵션 -->
+                <!-- 통합된 검색 및 위험인자 선택 박스 -->
+                <div class="integrated-search-box">
+                    <div class="risk-factor-choice" id="riskFactorChoice" style="display: none;">
+                        <h3>상세하게 확인해보시겠습니까? (위험인자 고려)</h3>
+                        <div class="choice-buttons">
+                            <button id="riskFactorYes" class="choice-btn yes-btn">예</button>
+                            <button id="riskFactorNo" class="choice-btn no-btn">아니오</button>
+                        </div>
+                    </div>
+                    
+                    <!-- 위험인자 체크 섹션 (통합) -->
+                    <div class="risk-factors-section" id="riskFactorsSection" style="display: none;">
+                        <h3>위험인자 체크</h3>
+                        <div id="riskFactorsContent">
+                            <!-- 동적으로 생성될 위험인자 항목들 -->
+                        </div>
+                        <div class="risk-factor-actions">
+                            <button id="completeRiskFactorBtn" class="complete-btn">위험인자 선택 완료</button>
+                            <p class="risk-factor-note">※ 해당하는 위험인자를 모두 선택한 후 '완료' 버튼을 눌러주세요.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="search-buttons">
+                        <button id="healthSearchBtn" class="search-btn" disabled>암확률 및 사망확률 조회하기</button>
+                        <button id="resetBtn" class="reset-btn" style="display: none;">다시해보기</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 결과 섹션 -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <h2>검색 결과</h2>
+                
+                <!-- 최상위 탭 컨트롤 -->
+                <div class="main-tab-controls">
+                    <button class="main-tab-btn active" data-main-tab="cancer">암발생률 분석</button>
+                    <button class="main-tab-btn" data-main-tab="death">사망확률 분석</button>
+                </div>
+                
+                <!-- 암 확률 결과 -->
+                <div class="result-column" id="cancerResultsColumn">
+                    <div class="result-card">
+                        <div class="tab-controls">
+                            <button class="tab-btn active" data-tab="current">2022년 발생률</button>
+                            <button class="tab-btn" data-tab="average" title="현재 데이터 문제로 인해 일부 순위가 정확하지 않을 수 있습니다">5개년 평균 (2018-2022)</button>
+                        </div>
+                        <div class="data-notice" id="dataNotice" style="display: none;">
+                            <p class="notice-text">✅ 5개년 평균 데이터가 업데이트되었습니다. 현재 데이터와 순위 차이를 확인해보세요!</p>
+                        </div>
+                        <div class="view-controls">
+                            <button class="view-btn active" data-type="cancer" data-limit="5">상위 5개</button>
+                            <button class="view-btn" data-type="cancer" data-limit="10">상위 10개</button>
+                            <button class="view-btn" data-type="cancer" data-limit="all">전체</button>
+                        </div>
+                        <div class="result-table" id="cancerResults">
+                            <!-- 암 발생률 결과가 여기에 표시됩니다 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 사망확률 결과 -->
+                <div class="result-column" id="deathResultsColumn" style="display: none;">
+                    <div class="result-card">
+                        <div class="tab-controls">
+                            <button class="tab-btn active" data-tab="life-current">2022년 사망원인</button>
+                            <button class="tab-btn" data-tab="life-average">5개년 평균 (2018-2022)</button>
+                        </div>
+                        <div class="life-table-info" id="lifeTableInfo">
+                            <!-- 기대여명, 사망확률, 생존자 비율이 여기에 표시됩니다 -->
+                        </div>
+                        <div class="view-controls">
+                            <button class="view-btn active" data-type="death" data-limit="5">상위 5개</button>
+                            <button class="view-btn" data-type="death" data-limit="10">상위 10개</button>
+                            <button class="view-btn" data-type="death" data-limit="all">상위 23개</button>
+                        </div>
+                        <div class="result-table" id="deathResults">
+                            <!-- 사망원인별 발생률 결과가 여기에 표시됩니다 -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 로딩 섹션 -->
+            <section class="loading-section" id="loadingSection" style="display: none;">
+                <div class="loading-spinner"></div>
+                <p>데이터를 조회하고 있습니다...</p>
+            </section>
+        </main>
+
+        <footer>
+            <p>※ 본 데이터는 국가통계자료를 기반으로 한 참고용 자료입니다.</p>
+        </footer>
+    </div>
+
+    <!-- 데이터 파일 로드 -->
+    <script src="../cancer-data.js?v=1"></script>
+    <script src="../cancer-data-5year.js?v=4"></script>
+    <script src="../death-data-2022.js?v=1"></script>
+    <script src="../death-data-5year.js?v=1"></script>
+    <script src="../complete-life-table-2023.js?v=1"></script>
+    <script src="risk-factors-data.js?v=3"></script>
+    
+    <!-- JavaScript 파일 로드 -->
+    <script src="script.js"></script>
+</body>
+</html>

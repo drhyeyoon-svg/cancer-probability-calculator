@@ -1,0 +1,226 @@
+---
+globs: *.js
+description: "JavaScript coding conventions and best practices"
+---
+
+# ⚡ JavaScript Conventions Guide
+
+## 📝 Naming Conventions
+
+### Variables & Functions
+- **camelCase**: `searchCancerData`, `displayResults`, `currentTab`
+- **Descriptive Names**: Function names clearly indicate their purpose
+- **Boolean Prefixes**: `is`, `has`, `can` (e.g., `isActive`, `hasData`)
+
+### Constants & Data
+- **UPPER_SNAKE_CASE**: For configuration constants
+- **Descriptive Objects**: `cancerData`, `deathData`, `lifeTableData`
+
+## 🏗️ Function Organization
+
+### Core Functions in [script.js](mdc:script.js)
+```javascript
+// Data Retrieval Functions
+searchCancerData(age, gender)     // Main cancer data search
+searchDeathData(age, gender)      // Death cause data search
+getLifeTableData(age, gender)     // Life expectancy data
+
+// UI Management Functions
+displayResults(data, container, type)  // Dynamic content rendering
+handleViewControl(event)               // View state management
+handleTabClick(event)                  // Tab navigation
+
+// Data Transformation Functions
+convertToPercentage(rate)              // Rate to percentage
+calculateCumulativePercentage(data)    // Statistical calculations
+calculateThreeMajorCauses(data)        // Special calculations
+```
+
+### Function Structure
+```javascript
+function functionName(param1, param2) {
+    // Input validation
+    if (!param1 || !param2) {
+        console.warn('Missing required parameters');
+        return null;
+    }
+    
+    // Main logic
+    const result = processData(param1, param2);
+    
+    // Return or display result
+    return result;
+}
+```
+
+## 🔄 Data Handling Patterns
+
+### Data Source Management
+```javascript
+// Always check for data availability
+const dataSource = (typeof cancerData !== 'undefined' && cancerData) 
+    ? cancerData 
+    : fallbackCancerData;
+
+// Safe data access
+const data = dataSource[gender] && dataSource[gender][ageGroup] 
+    ? dataSource[gender][ageGroup] 
+    : [];
+```
+
+### Error Handling
+```javascript
+// Graceful degradation
+if (!data || data.length === 0) {
+    container.innerHTML = '<p class="no-data">데이터가 없습니다.</p>';
+    return;
+}
+```
+
+## 🎯 Event Handling Standards
+
+### Event Listener Setup
+```javascript
+// Use descriptive event handler names
+document.getElementById('searchBtn').addEventListener('click', performSearch);
+document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', handleViewControl);
+});
+```
+
+### Event Handler Structure
+```javascript
+function handleEvent(event) {
+    const target = event.target;
+    const data = target.dataset;
+    
+    // Validate input
+    if (!data.required) return;
+    
+    // Process event
+    processEvent(data);
+    
+    // Update UI
+    updateDisplay();
+}
+```
+
+## 📊 Data Processing Patterns
+
+### Age Group Mapping
+```javascript
+function getAgeGroup(age) {
+    if (age < 20) return '0-19';
+    if (age < 30) return '20-29';
+    if (age < 40) return '30-39';
+    if (age < 50) return '40-49';
+    if (age < 60) return '50-59';
+    if (age < 70) return '60-69';
+    return '70+';
+}
+```
+
+### Data Filtering
+```javascript
+// Filter out unwanted items
+const filteredData = data.filter(item => {
+    const name = item.name;
+    return !name.includes('unwanted') && 
+           !name.includes('duplicate');
+});
+```
+
+### Data Sorting
+```javascript
+// Sort by rate in descending order
+return data.sort((a, b) => b.rate - a.rate);
+```
+
+## 🎨 DOM Manipulation Standards
+
+### Dynamic Content Creation
+```javascript
+// Build HTML strings efficiently
+let html = `<div class="container">`;
+html += `<h3>${title}</h3>`;
+html += `<div class="data-grid">`;
+
+data.forEach((item, index) => {
+    html += `<div class="item">${item.name}</div>`;
+});
+
+html += `</div></div>`;
+container.innerHTML = html;
+```
+
+### Element Selection
+```javascript
+// Use specific selectors
+const container = document.getElementById('specificId');
+const buttons = container.querySelectorAll('.button-class');
+const activeButton = container.querySelector('.button-class.active');
+```
+
+## 🔧 State Management
+
+### Global State Variables
+```javascript
+// Track current application state
+let currentTab = 'current';        // Current data tab
+let currentLifeTab = 'life-current'; // Current life table tab
+```
+
+### State Updates
+```javascript
+// Update state and UI together
+function updateTab(newTab) {
+    currentTab = newTab;
+    updateTabDisplay();
+    refreshData();
+}
+```
+
+## 📝 Commenting Standards
+
+### Function Documentation
+```javascript
+/**
+ * Searches cancer data for specific age and gender
+ * @param {number} age - Age of the person
+ * @param {string} gender - Gender ('male' or 'female')
+ * @returns {Array} Array of cancer data objects
+ */
+function searchCancerData(age, gender) {
+    // Implementation
+}
+```
+
+### Inline Comments
+```javascript
+// Korean comments for business logic
+// English comments for technical implementation
+
+// 3대 사인 관련 항목들 제거 (Remove 3 major cause related items)
+const filteredData = removeThreeMajorCauses(data);
+```
+
+## 🚀 Performance Considerations
+
+### Efficient Data Processing
+```javascript
+// Use map for transformations
+const convertedData = data.map(item => ({
+    name: item.name,
+    rate: item.rate
+}));
+
+// Use slice for limiting results
+const topResults = data.slice(0, limit);
+```
+
+### Memory Management
+```javascript
+// Clear containers before updating
+container.innerHTML = '';
+container.innerHTML = newContent;
+```

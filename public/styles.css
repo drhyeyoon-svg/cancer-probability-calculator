@@ -1,0 +1,1257 @@
+/* 기본 스타일 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f7fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 헤더 스타일 */
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* 입력 섹션 */
+.input-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.input-section h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.5rem;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+.search-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.search-btn:hover {
+    background: linear-gradient(135deg, #2980b9, #1f618d);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.search-btn:disabled {
+    background: #bdc3c7 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.6;
+}
+
+.search-btn:disabled:hover {
+    background: #bdc3c7 !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* 다시해보기 버튼 스타일 */
+.reset-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.reset-btn:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+/* 비활성화된 입력 필드 스타일 */
+input:disabled,
+select:disabled {
+    background-color: #f8f9fa;
+    color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* 위험인자 보정 관련 스타일 */
+.has-risk-factor {
+    background-color: #fff3cd !important;
+    border-left: 4px solid #ffc107;
+}
+
+.adjusted-rate {
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.base-rate {
+    font-size: 0.9em;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.odds-ratio {
+    background-color: #ffc107;
+    color: #212529;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-left: 8px;
+}
+
+/* 위험인자 적용된 행 호버 효과 */
+.has-risk-factor:hover {
+    background-color: #fff3cd !important;
+    transform: none;
+}
+
+/* 위험인자 선택 섹션 */
+.risk-factor-choice {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.risk-factor-choice h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+}
+
+.choice-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.choice-btn {
+    padding: 12px 30px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    color: #333;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 100px;
+}
+
+.choice-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.choice-btn.yes-btn {
+    border-color: #27ae60;
+    color: #27ae60;
+}
+
+.choice-btn.yes-btn:hover {
+    background: #27ae60;
+    color: white;
+}
+
+.choice-btn.yes-btn.selected {
+    background: #27ae60;
+    color: white;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+}
+
+.choice-btn.no-btn {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.choice-btn.no-btn:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.choice-btn.no-btn.selected {
+    background: #e74c3c;
+    color: white;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+.choice-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* 위험인자 완료 버튼 */
+.risk-factor-actions {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid #ecf0f1;
+}
+
+.complete-btn {
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 10px;
+}
+
+.complete-btn:hover {
+    background: linear-gradient(135deg, #2980b9, #1f618d);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.complete-btn:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.risk-factor-note {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin: 0;
+}
+
+/* 결과 섹션 */
+.results-section {
+    margin-bottom: 30px;
+}
+
+.results-section h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    text-align: center;
+}
+
+.result-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 25px;
+}
+
+.result-card h3 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    border-left: 4px solid #e74c3c;
+    padding-left: 15px;
+}
+
+/* 뷰 컨트롤 버튼 */
+.view-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.view-btn {
+    padding: 8px 16px;
+    border: 2px solid #3498db;
+    background: white;
+    color: #3498db;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+    background: #3498db;
+    color: white;
+}
+
+.view-btn.active {
+    background: #3498db;
+    color: white;
+}
+
+/* 3대 사인 정보 표시 */
+.three-major-causes {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.three-major-causes h4 {
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.three-major-breakdown {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.three-major-breakdown span {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+/* 사망확률 정보 표시 */
+.death-probability-info {
+    background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.death-probability-info h4 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.death-probability-info .probability-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.death-probability-info .probability-description {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* 누적 정보 표시 */
+.cumulative-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.cumulative-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* 결과 테이블 */
+.result-table {
+    overflow-x: auto;
+}
+
+.result-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.result-table th,
+.result-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e1e8ed;
+}
+
+.result-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+    color: #2c3e50;
+    position: sticky;
+    top: 0;
+}
+
+.result-table tr:hover {
+    background: #f8f9fa;
+}
+
+.result-table .rank {
+    font-weight: bold;
+    color: #e74c3c;
+    width: 60px;
+}
+
+.result-table .disease-name {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.result-table .rate {
+    font-weight: bold;
+    color: #27ae60;
+    text-align: right;
+}
+
+/* 데이터 안내 메시지 */
+.data-notice {
+    background: linear-gradient(135deg, #d4edda, #c3e6cb);
+    border: 2px solid #27ae60;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.2);
+}
+
+.data-notice .notice-text {
+    color: #155724;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+/* 모든암 특별 스타일 */
+.result-table .all-cancer-row {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: 3px solid #5a67d8;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    transform: scale(1.02);
+    position: relative;
+}
+
+.result-table .all-cancer-row:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    transform: scale(1.03);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.result-table .all-cancer-row td {
+    border-bottom: none;
+    padding: 16px 15px;
+    font-weight: 600;
+}
+
+.result-table .all-cancer-row .no-rank {
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    position: relative;
+}
+
+.result-table .all-cancer-row .no-rank::before {
+    content: "★";
+    font-size: 1.5rem;
+}
+
+.result-table .all-cancer-row .all-cancer-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.result-table .all-cancer-row .all-cancer-rate {
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-align: right;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+/* 로딩 스피너 */
+.loading-section {
+    text-align: center;
+    padding: 40px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 푸터 */
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    border-top: 1px solid #e1e8ed;
+    margin-top: 40px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    /* 통합 박스 모바일 스타일 */
+    .integrated-search-box {
+        padding: 15px;
+        margin-top: 15px;
+    }
+    
+    .integrated-search-box .search-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .integrated-search-box .search-btn {
+        min-width: auto;
+        max-width: none;
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 1rem;
+    }
+    
+    .integrated-search-box .risk-factor-choice,
+    .integrated-search-box .risk-factors-section {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    
+    .integrated-search-box .risk-factor-choice h3,
+    .integrated-search-box .risk-factors-section h3 {
+        font-size: 1rem;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .input-section,
+    .result-card {
+        padding: 20px;
+    }
+    
+    .view-controls {
+        justify-content: center;
+    }
+    
+    .result-table {
+        font-size: 0.9rem;
+    }
+    
+    .result-table th,
+    .result-table td {
+        padding: 8px 10px;
+    }
+    
+    /* 모든암 모바일 스타일 */
+    .result-table .all-cancer-row .no-rank {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+    
+    .result-table .all-cancer-row .no-rank::before {
+        font-size: 1.2rem;
+    }
+    
+    .result-table .all-cancer-row .all-cancer-name {
+        font-size: 1rem;
+    }
+    
+    .result-table .all-cancer-row .all-cancer-rate {
+        font-size: 1.1rem;
+    }
+    
+    .cumulative-info h4 {
+        font-size: 1rem;
+    }
+    
+    .three-major-causes h4 {
+        font-size: 1rem;
+    }
+    
+    .death-probability-info h4 {
+        font-size: 1.1rem;
+    }
+    
+    .death-probability-info .probability-value {
+        font-size: 1.5rem;
+    }
+    
+    .three-major-breakdown {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .three-major-breakdown span {
+        width: 100%;
+        max-width: 200px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 통합 박스 작은 모바일 스타일 */
+    .integrated-search-box {
+        padding: 12px;
+        margin-top: 12px;
+    }
+    
+    .integrated-search-box .search-btn {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .integrated-search-box .risk-factor-choice,
+    .integrated-search-box .risk-factors-section {
+        padding: 10px;
+        margin-bottom: 12px;
+    }
+    
+    .integrated-search-box .risk-factor-choice h3,
+    .integrated-search-box .risk-factors-section h3 {
+        font-size: 0.9rem;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .view-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .view-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .cumulative-info h4 {
+        font-size: 0.9rem;
+    }
+    
+    .three-major-causes h4 {
+        font-size: 0.9rem;
+    }
+    
+    .death-probability-info h4 {
+        font-size: 1rem;
+    }
+    
+    .death-probability-info .probability-value {
+        font-size: 1.2rem;
+    }
+    
+    .three-major-breakdown span {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+    
+    .result-table th,
+    .result-table td {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+    }
+    
+    /* 모든암 작은 모바일 스타일 */
+    .result-table .all-cancer-row .no-rank {
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
+    }
+    
+    .result-table .all-cancer-row .no-rank::before {
+        font-size: 1rem;
+    }
+    
+    .result-table .all-cancer-row .all-cancer-name {
+        font-size: 0.9rem;
+    }
+    
+    .result-table .all-cancer-row .all-cancer-rate {
+        font-size: 1rem;
+    }
+}
+
+/* 애니메이션 */
+.result-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 메인 탭 컨트롤 */
+.main-tab-controls {
+    display: flex;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #e0e0e0;
+    background: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden;
+}
+
+.main-tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 18px 20px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 4px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.main-tab-btn:hover {
+    color: #3498db;
+    background-color: #e9ecef;
+}
+
+.main-tab-btn.active {
+    color: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-bottom-color: transparent;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.main-tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* 탭 컨트롤 */
+.tab-controls {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: #3498db;
+    background-color: #f8f9fa;
+}
+
+.tab-btn.active {
+    color: #3498db;
+    border-bottom-color: #3498db;
+    background-color: #f8f9fa;
+}
+
+/* 생명표 정보 스타일 */
+.life-table-info {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.life-table-info h4 {
+    color: #2c3e50;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+}
+
+.life-table-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.life-table-item {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.life-table-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.life-table-item .label {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.life-table-item .value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.life-table-item .unit {
+    font-size: 0.8rem;
+    color: #888;
+    margin-left: 3px;
+}
+
+.life-table-item .sub-value {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 5px;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.life-table-item.life-expectancy {
+    border-left: 4px solid #27ae60;
+}
+
+.life-table-item.death-probability {
+    border-left: 4px solid #e74c3c;
+}
+
+.life-table-item.survival-rate {
+    border-left: 4px solid #3498db;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .main-tab-controls {
+        margin-bottom: 20px;
+    }
+    
+    .main-tab-btn {
+        padding: 14px 15px;
+        font-size: 1rem;
+    }
+    
+    .life-table-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    .life-table-item {
+        padding: 12px;
+    }
+    
+    .life-table-item .value {
+        font-size: 1.1rem;
+    }
+    
+    .life-table-info h4 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-tab-btn {
+        padding: 12px 10px;
+        font-size: 0.9rem;
+    }
+}
+
+/* 통합된 검색 박스 스타일 */
+.integrated-search-box {
+    background: white;
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.integrated-search-box:hover {
+    border-color: #3498db;
+    box-shadow: 0 6px 16px rgba(52, 152, 219, 0.15);
+}
+
+/* 위험인자 선택 창 (통합 박스 내) */
+.integrated-search-box .risk-factor-choice {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.integrated-search-box .risk-factor-choice h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* 위험인자 체크 섹션 (통합 박스 내) */
+.integrated-search-box .risk-factors-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border-radius: 8px;
+    border: 1px solid #f39c12;
+}
+
+.integrated-search-box .risk-factors-section h3 {
+    color: #856404;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* 검색 버튼들 (통합 박스 내) */
+.integrated-search-box .search-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.integrated-search-box .search-btn {
+    flex: 1;
+    min-width: 180px;
+    max-width: 250px;
+    padding: 15px 20px;
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.integrated-search-box .search-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #2980b9, #1f5f8b);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.integrated-search-box .search-btn:disabled {
+    background: #bdc3c7;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.integrated-search-box .reset-btn {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.integrated-search-box .reset-btn:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-1px);
+}
+
+/* 검색 버튼 스타일 */
+.search-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.search-buttons .search-btn {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* 결과 컬럼 스타일 */
+.result-column {
+    margin-bottom: 30px;
+}
+
+.result-column .result-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 위험인자 체크 섹션 스타일 */
+.risk-factors-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.risk-factors-section h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    border-bottom: 3px solid #3498db;
+    padding-bottom: 10px;
+}
+
+.risk-category {
+    margin-bottom: 30px;
+}
+
+.risk-category h3 {
+    color: #34495e;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.risk-factors-grid,
+.family-history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.risk-factor-item,
+.family-history-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.risk-factor-item:hover,
+.family-history-item:hover {
+    border-color: #3498db;
+    background: #e3f2fd;
+}
+
+.risk-factor-item label,
+.family-history-item label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.risk-factor-item input[type="checkbox"],
+.family-history-item input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: #3498db;
+}
+
+/* 위험인자 체크박스 스타일 */
+.input-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    color: #2c3e50;
+}
+
+.input-group input[type="checkbox"] {
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: #3498db;
+}
+
+/* 보정된 확률 표시 스타일 */
+.adjusted-rate {
+    color: #2c3e50;
+    font-weight: 900;
+    background-color: #f39c12;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.original-rate {
+    color: #2c3e50;
+}
+
+.total-adjusted {
+    color: #2c3e50;
+    font-weight: 900;
+    font-size: 1.2em;
+    background-color: #e74c3c;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    margin-left: 5px;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .search-buttons {
+        flex-direction: column;
+    }
+    
+    .search-buttons .search-btn {
+        min-width: auto;
+    }
+    
+    .risk-factors-grid,
+    .family-history-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .risk-factors-section {
+        padding: 20px;
+    }
+    
+    .risk-factor-item,
+    .family-history-item {
+        padding: 12px;
+    }
+}

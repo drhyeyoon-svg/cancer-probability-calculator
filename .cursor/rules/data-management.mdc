@@ -1,0 +1,249 @@
+---
+description: "Data management and processing guidelines for the cancer probability calculator"
+---
+
+# 📊 Data Management Guide
+
+## 🗂️ Data File Organization
+
+### Core Data Files
+- [cancer-data.js](mdc:cancer-data.js) - Main cancer incidence data (1,400+ lines)
+- [death-data.js](mdc:death-data.js) - Death cause statistics
+- [life-table-data.js](mdc:life-table-data.js) - Simplified life table data
+- [complete-life-table-data.js](mdc:complete-life-table-data.js) - Complete life expectancy data
+
+### Source Data Files
+- `24개_암종_성_연령_5세_별_암발생자수__발생률_*.xlsx` - Cancer incidence source
+- `사망원인생명표_5세별__*.xlsx` - Death cause source
+- `완전생명표_1세별__*.xlsx` - Complete life table source
+
+## 📋 Data Structure Standards
+
+### Cancer Data Structure
+```javascript
+const cancerData = {
+  "male": {
+    "0-19": [
+      {
+        "name": "백혈병(C91-C95)",
+        "rate": 4.825,           // 2022 incidence rate (per 100,000)
+        "average5Year": 4.95     // 5-year average (2018-2022)
+      }
+    ],
+    "20-29": [/* ... */],
+    // ... other age groups
+  },
+  "female": {
+    // Same structure for female data
+  }
+}
+```
+
+### Death Data Structure
+```javascript
+const deathData = {
+  "male": {
+    "0-19": [
+      {
+        "name": "3대 사인",
+        "rate": 43.79            // Death rate percentage
+      },
+      {
+        "name": "악성 신생물(암)",
+        "rate": 23.83
+      }
+      // ... other causes
+    ]
+  }
+}
+```
+
+## 🔄 Data Processing Pipeline
+
+### ETL Process
+1. **Extract**: Read Excel files from KOSIS
+2. **Transform**: Clean, validate, and structure data
+3. **Load**: Generate JavaScript data files
+
+### Key Processing Scripts
+- [parse_excel_data_final.py](mdc:parse_excel_data_final.py) - Main cancer data parser
+- [parse_complete_life_table_final.py](mdc:parse_complete_life_table_final.py) - Life table parser
+- [fix_integration.py](mdc:fix_integration.py) - Data integration fixes
+
+## 🎯 Age Group Mapping
+
+### Standard Age Groups
+```python
+age_groups = {
+    '0-19': ['0-4세', '5-9세', '10-14세', '15-19세'],
+    '20-29': ['20-24세', '25-29세'],
+    '30-39': ['30-34세', '35-39세'],
+    '40-49': ['40-44세', '45-49세'],
+    '50-59': ['50-54세', '55-59세'],
+    '60-69': ['60-64세', '65-69세'],
+    '70+': ['70-74세', '75-79세', '80-84세', '85세이상']
+}
+```
+
+### Gender Mapping
+```python
+gender_mapping = {
+    '남자': 'male',
+    '여자': 'female'
+}
+```
+
+## 🔍 Data Validation Rules
+
+### Required Fields
+- **name**: Disease/cause name (string)
+- **rate**: Incidence/death rate (number)
+- **average5Year**: 5-year average (number, optional)
+
+### Data Quality Checks
+```python
+def validate_data_item(item):
+    """데이터 항목 유효성 검사"""
+    required_fields = ['name', 'rate']
+    
+    for field in required_fields:
+        if field not in item:
+            return False, f"Missing field: {field}"
+    
+    if not isinstance(item['rate'], (int, float)):
+        return False, "Rate must be numeric"
+    
+    if item['rate'] < 0:
+        return False, "Rate cannot be negative"
+    
+    return True, "Valid"
+```
+
+## 📈 Data Transformation Rules
+
+### Rate Conversion
+```javascript
+// Cancer rates: per 100,000 → percentage
+function convertToPercentage(rate) {
+    return (rate / 100000) * 100;
+}
+
+// Death rates: already in percentage, no conversion needed
+```
+
+### Data Filtering
+```javascript
+// Remove unwanted categories
+const filteredData = data.filter(item => 
+    item.name !== '기타 암(Re. C00-C96)' &&
+    item.name !== '3대 사인' &&
+    !item.name.includes('순환계통의 질환') &&
+    !item.name.includes('호흡계통의 질환')
+);
+```
+
+## 🔄 Data Update Process
+
+### Update Workflow
+1. **Download**: Get latest Excel files from KOSIS
+2. **Backup**: Create backup of current data files
+3. **Parse**: Run Python parsing scripts
+4. **Validate**: Check data integrity
+5. **Test**: Verify web application functionality
+6. **Deploy**: Replace old data files
+
+### Update Scripts
+```bash
+# Main data update
+python parse_excel_data_final.py
+
+# Life table update
+python parse_complete_life_table_final.py
+
+# Integration and fixes
+python fix_integration.py
+```
+
+## 📊 Statistical Calculations
+
+### Cumulative Percentages
+```javascript
+function calculateCumulativePercentage(data, limit, type) {
+    const limitedData = limit === 'all' ? data : data.slice(0, parseInt(limit));
+    let cumulative = 0;
+    
+    return limitedData.map(item => {
+        const percentage = type === 'death' ? item.rate : convertToPercentage(item.rate);
+        cumulative += percentage;
+        
+        return {
+            ...item,
+            percentage: percentage
+        };
+    });
+}
+```
+
+### Three Major Causes Calculation
+```javascript
+function calculateThreeMajorCauses(data) {
+    let cancer = 0, pneumonia = 0, cardiovascular = 0;
+    
+    data.forEach(item => {
+        if (item.name === '악성 신생물(암)') cancer = item.rate;
+        if (item.name === '- 폐렴') pneumonia = item.rate;
+        if (item.name === '- 심장 질환') cardiovascular = item.rate;
+    });
+    
+    return {
+        cancer, pneumonia, cardiovascular,
+        total: cancer + pneumonia + cardiovascular
+    };
+}
+```
+
+## 🚨 Data Quality Assurance
+
+### Common Issues
+- **Missing Data**: Handle NaN values appropriately
+- **Duplicate Entries**: Remove duplicates during processing
+- **Inconsistent Naming**: Standardize disease/cause names
+- **Data Type Mismatches**: Ensure numeric fields are properly typed
+
+### Quality Checks
+```python
+def quality_check(df):
+    """데이터 품질 검사"""
+    issues = []
+    
+    # Check for missing values
+    if df.isnull().any().any():
+        issues.append("Missing values detected")
+    
+    # Check for duplicates
+    if df.duplicated().any():
+        issues.append("Duplicate rows found")
+    
+    # Check data types
+    numeric_columns = ['rate', 'average5Year']
+    for col in numeric_columns:
+        if col in df.columns and not pd.api.types.is_numeric_dtype(df[col]):
+            issues.append(f"Column {col} is not numeric")
+    
+    return issues
+```
+
+## 📝 Documentation Standards
+
+### Data File Headers
+```javascript
+// 암 발생률 데이터 (2022년 + 5개년 평균)
+// 국가통계자료 기반
+// 마지막 업데이트: 2025년 9월
+// 데이터 출처: KOSIS 국가통계포털
+```
+
+### Update Documentation
+- Record update dates in file headers
+- Maintain changelog in [DATA_UPDATE_GUIDE.md](mdc:DATA_UPDATE_GUIDE.md)
+- Document any data structure changes

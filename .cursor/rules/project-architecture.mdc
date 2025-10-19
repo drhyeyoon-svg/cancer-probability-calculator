@@ -1,0 +1,72 @@
+---
+alwaysApply: true
+description: "Project architecture and structure guidelines for the National Cancer Probability Calculator"
+---
+
+# 🏗️ Project Architecture Guide
+
+## 📁 Core File Structure
+
+The main application follows a clear separation of concerns:
+
+- **Entry Point**: [index.html](mdc:index.html) - Main application entry point with semantic HTML5 structure
+- **Styling**: [styles.css](mdc:styles.css) - Complete component-based CSS with responsive design
+- **Logic**: [script.js](mdc:script.js) - Core application logic with 20+ specialized functions
+- **Data Files**: 
+  - [cancer-data.js](mdc:cancer-data.js) - Cancer incidence data (1,400+ lines)
+  - [death-data.js](mdc:death-data.js) - Death cause data
+  - [life-table-data.js](mdc:life-table-data.js) - Life table data
+  - [complete-life-table-data.js](mdc:complete-life-table-data.js) - Complete life expectancy data
+
+## 🔄 Data Flow Architecture
+
+```
+Excel Files → Python Parser → JavaScript Data → Frontend Display
+     ↓              ↓              ↓              ↓
+KOSIS Data → ETL Pipeline → Static JSON → Dynamic UI
+```
+
+## 🎯 Key Architectural Patterns
+
+### Frontend Architecture
+- **MVC-like Pattern**: Clear separation of data, logic, and presentation
+- **Event-Driven**: DOM event handling for user interactions
+- **Modular Functions**: Specialized functions for different features
+- **Fallback System**: Graceful degradation with sample data
+
+### Data Architecture
+- **Hierarchical Structure**: Gender → Age Group → Disease → Rate
+- **Dual Data Sources**: 2022 data + 5-year averages
+- **Normalized Format**: Consistent JSON structure across all data files
+
+## 🐍 Data Processing Pipeline
+
+- **Main Parser**: [parse_excel_data_final.py](mdc:parse_excel_data_final.py)
+- **Life Table Parser**: [parse_complete_life_table_final.py](mdc:parse_complete_life_table_final.py)
+- **Integration Scripts**: [fix_integration.py](mdc:fix_integration.py)
+
+## 📊 Data Structure Standards
+
+All data files follow this consistent structure:
+```javascript
+const dataType = {
+  "male": {
+    "0-19": [
+      {
+        "name": "Disease Name",
+        "rate": 4.825,           // 2022 incidence rate
+        "average5Year": 4.95     // 5-year average (when applicable)
+      }
+    ]
+  },
+  "female": { /* same structure */ }
+}
+```
+
+## 🔧 Core Functions
+
+Key functions in [script.js](mdc:script.js):
+- `searchCancerData(age, gender)` - Main data retrieval
+- `displayResults(data, container, type)` - Dynamic content rendering
+- `handleViewControl(event)` - View state management
+- `convertToPercentage(rate)` - Rate to percentage conversion

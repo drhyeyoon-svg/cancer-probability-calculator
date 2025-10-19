@@ -1,0 +1,105 @@
+---
+globs: *.css,*.html
+description: "CSS and HTML styling conventions and best practices"
+---
+
+# 🎨 Styling Conventions Guide
+
+## 📋 CSS Architecture
+
+### Organization Structure
+The [styles.css](mdc:styles.css) file follows this logical organization:
+1. **Reset & Base Styles** - Universal resets and body styles
+2. **Layout Components** - Container, header, main sections
+3. **UI Components** - Buttons, forms, cards, tables
+4. **Interactive Elements** - Hover states, animations
+5. **Responsive Design** - Mobile-first breakpoints
+6. **Utility Classes** - Reusable styling patterns
+
+### CSS Methodology
+- **Component-Based**: Each UI element has its own section
+- **BEM-like Naming**: `.component__element--modifier` pattern
+- **Logical Grouping**: Related styles grouped together
+- **Alphabetical Properties**: CSS properties ordered alphabetically within rules
+
+## 🎯 Key Styling Patterns
+
+### Color Scheme
+```css
+/* Primary Colors */
+--primary-blue: #3498db
+--primary-purple: #667eea
+--success-green: #27ae60
+--danger-red: #e74c3c
+--warning-orange: #f39c12
+```
+
+### Layout Patterns
+- **Container**: Max-width 1200px with auto margins
+- **Cards**: White background with subtle shadows
+- **Grid Systems**: CSS Grid for complex layouts, Flexbox for simple ones
+- **Responsive**: Mobile-first with breakpoints at 768px and 480px
+
+### Component Styling
+- **Buttons**: Gradient backgrounds with hover effects
+- **Forms**: Clean inputs with focus states
+- **Tables**: Hover effects and sticky headers
+- **Cards**: Subtle shadows with hover animations
+
+## 📱 Responsive Design Standards
+
+### Breakpoints
+```css
+/* Mobile First Approach */
+@media (max-width: 768px) { /* Tablet styles */ }
+@media (max-width: 480px) { /* Mobile styles */ }
+```
+
+### Responsive Patterns
+- **Flexible Grids**: `grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))`
+- **Stacked Layouts**: Single column on mobile
+- **Touch-Friendly**: Minimum 44px touch targets
+- **Readable Text**: Minimum 16px font size on mobile
+
+## 🎭 Animation & Transitions
+
+### Standard Transitions
+```css
+transition: all 0.3s ease;  /* Default transition */
+transform: translateY(-2px); /* Hover lift effect */
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+```
+
+### Keyframe Animations
+- **Fade In Up**: `@keyframes fadeInUp` for card appearances
+- **Loading Spinner**: `@keyframes spin` for loading states
+- **Smooth Transitions**: 0.3s ease for all interactive elements
+
+## 🏷️ HTML Structure Standards
+
+### Semantic HTML5
+- Use `<section>`, `<main>`, `<header>`, `<footer>` appropriately
+- Form elements with proper `<label>` associations
+- Accessibility attributes where needed
+
+### Class Naming
+- **Components**: `.result-card`, `.input-section`
+- **Elements**: `.view-controls`, `.tab-btn`
+- **Modifiers**: `.active`, `.hover`, `.disabled`
+
+## 🎨 Visual Design Principles
+
+### Typography
+- **Font Stack**: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+- **Hierarchy**: Clear heading sizes (h1: 2.5rem, h2: 1.8rem, h3: 1.3rem)
+- **Line Height**: 1.6 for optimal readability
+
+### Spacing
+- **Consistent Margins**: 20px, 25px, 30px, 40px scale
+- **Padding**: 15px, 20px, 25px, 30px scale
+- **Gaps**: 10px, 15px, 20px for grid/flex layouts
+
+### Shadows & Depth
+- **Subtle Shadows**: `0 5px 20px rgba(0, 0, 0, 0.08)`
+- **Enhanced Shadows**: `0 10px 30px rgba(0, 0, 0, 0.1)`
+- **Hover Effects**: Increased shadow depth on interaction

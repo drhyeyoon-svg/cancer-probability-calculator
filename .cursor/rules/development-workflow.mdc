@@ -1,0 +1,277 @@
+---
+description: "Development workflow and best practices for the cancer probability calculator project"
+---
+
+# 🚀 Development Workflow Guide
+
+## 🛠️ Development Environment Setup
+
+### Prerequisites
+- **Python 3.x** with pandas and openpyxl
+- **Modern Web Browser** (Chrome, Firefox, Safari, Edge)
+- **Text Editor/IDE** (VS Code, PyCharm, etc.)
+- **Git** for version control
+
+### Local Development Server
+```bash
+# Start development server
+python -m http.server 8000
+
+# Access application
+http://localhost:8000
+```
+
+## 📁 File Organization Standards
+
+### Project Structure
+```
+암확률계산기/
+├── 🎨 Frontend
+│   ├── index.html              # Main entry point
+│   ├── styles.css              # All styling
+│   └── script.js               # Application logic
+├── 📊 Data Files
+│   ├── cancer-data.js          # Cancer incidence data
+│   ├── death-data.js           # Death cause data
+│   └── life-table-data.js      # Life expectancy data
+├── 🐍 Processing Scripts
+│   ├── parse_excel_data_final.py
+│   └── [analysis/debug scripts]
+├── 📋 Documentation
+│   ├── README.md
+│   └── DATA_UPDATE_GUIDE.md
+└── 📈 Source Data
+    └── *.xlsx files
+```
+
+### File Naming Conventions
+- **HTML/CSS/JS**: kebab-case (`index.html`, `styles.css`)
+- **Python Scripts**: snake_case (`parse_excel_data.py`)
+- **Data Files**: descriptive names (`cancer-data.js`)
+- **Excel Files**: include date stamps (`data_20250922.xlsx`)
+
+## 🔄 Development Workflow
+
+### 1. Feature Development
+```bash
+# Create feature branch
+git checkout -b feature/new-feature
+
+# Make changes
+# Test locally
+python -m http.server 8000
+
+# Commit changes
+git add .
+git commit -m "Add new feature: description"
+
+# Push and create PR
+git push origin feature/new-feature
+```
+
+### 2. Data Updates
+```bash
+# Update source Excel files
+# Run parsing scripts
+python parse_excel_data_final.py
+python parse_complete_life_table_final.py
+
+# Test data integrity
+# Update documentation
+# Commit changes
+```
+
+### 3. Bug Fixes
+```bash
+# Create bugfix branch
+git checkout -b bugfix/issue-description
+
+# Fix issue
+# Test thoroughly
+# Update tests if applicable
+# Commit fix
+```
+
+## 🧪 Testing Standards
+
+### Manual Testing Checklist
+- [ ] **Input Validation**: Test edge cases (age 0, 120, invalid inputs)
+- [ ] **Data Display**: Verify all data displays correctly
+- [ ] **Responsive Design**: Test on mobile, tablet, desktop
+- [ ] **Browser Compatibility**: Test in Chrome, Firefox, Safari, Edge
+- [ ] **Performance**: Check loading times with large datasets
+
+### Data Testing
+```python
+# Test data integrity
+def test_data_structure():
+    """Test data file structure"""
+    # Load and validate cancer data
+    # Check required fields
+    # Verify data types
+    # Test age group mappings
+```
+
+### UI Testing
+```javascript
+// Test core functionality
+function testSearchFunctionality() {
+    // Test age/gender input
+    // Verify data retrieval
+    // Check result display
+    // Test view controls
+}
+```
+
+## 🔍 Debugging Guidelines
+
+### Browser Debugging
+```javascript
+// Use console for debugging
+console.log('Debug info:', data);
+console.warn('Warning message');
+console.error('Error details');
+
+// Check data loading
+checkDataLoadStatus();
+```
+
+### Python Debugging
+```python
+# Use print statements for debugging
+print(f"Debug: Processing {len(data)} items")
+
+# Use try-catch for error handling
+try:
+    result = process_data()
+except Exception as e:
+    print(f"Error: {e}")
+    import traceback
+    traceback.print_exc()
+```
+
+### Data Analysis Scripts
+- Use `analyze_*.py` scripts for data structure analysis
+- Use `debug_*.py` scripts for troubleshooting
+- Use `test_*.py` scripts for validation
+
+## 📝 Code Review Standards
+
+### Review Checklist
+- [ ] **Code Quality**: Follows established conventions
+- [ ] **Functionality**: Works as expected
+- [ ] **Performance**: No performance regressions
+- [ ] **Documentation**: Code is well-documented
+- [ ] **Testing**: Adequate test coverage
+- [ ] **Security**: No security vulnerabilities
+
+### Review Process
+1. **Self Review**: Check your own code first
+2. **Peer Review**: Have another developer review
+3. **Testing**: Verify functionality works
+4. **Documentation**: Update docs if needed
+5. **Merge**: Merge after approval
+
+## 🚀 Deployment Process
+
+### Pre-deployment Checklist
+- [ ] All tests pass
+- [ ] Data files are up-to-date
+- [ ] Documentation is current
+- [ ] Performance is acceptable
+- [ ] Cross-browser compatibility verified
+
+### Deployment Steps
+```bash
+# 1. Update data files
+python parse_excel_data_final.py
+
+# 2. Test locally
+python -m http.server 8000
+
+# 3. Commit changes
+git add .
+git commit -m "Update data for deployment"
+
+# 4. Deploy to production
+# (Depends on hosting platform)
+```
+
+## 🔧 Maintenance Guidelines
+
+### Regular Maintenance Tasks
+- **Data Updates**: Update statistics every 4-5 years
+- **Dependency Updates**: Keep Python packages updated
+- **Browser Testing**: Test with new browser versions
+- **Performance Monitoring**: Monitor loading times
+- **Security Updates**: Keep dependencies secure
+
+### Data Maintenance
+```bash
+# Monthly data validation
+python validate_data_integrity.py
+
+# Quarterly performance check
+python performance_test.py
+
+# Annual data update
+python update_all_data.py
+```
+
+## 📊 Performance Optimization
+
+### Frontend Optimization
+- **Minify CSS/JS**: For production builds
+- **Optimize Images**: Compress and resize
+- **Lazy Loading**: Load data on demand
+- **Caching**: Implement browser caching
+
+### Data Optimization
+- **Compress Data**: Remove unnecessary fields
+- **Pagination**: Load data in chunks
+- **Indexing**: Optimize data access patterns
+
+## 🐛 Error Handling Standards
+
+### Frontend Error Handling
+```javascript
+// Graceful error handling
+try {
+    const result = riskyOperation();
+    displayResult(result);
+} catch (error) {
+    console.error('Operation failed:', error);
+    displayErrorMessage('작업 중 오류가 발생했습니다.');
+}
+```
+
+### Backend Error Handling
+```python
+# Comprehensive error handling
+def safe_operation():
+    try:
+        result = perform_operation()
+        return result
+    except FileNotFoundError:
+        print("파일을 찾을 수 없습니다.")
+        return None
+    except ValueError as e:
+        print(f"데이터 오류: {e}")
+        return None
+    except Exception as e:
+        print(f"예상치 못한 오류: {e}")
+        return None
+```
+
+## 📚 Documentation Standards
+
+### Code Documentation
+- **Function Comments**: Explain purpose and parameters
+- **Inline Comments**: Explain complex logic
+- **README Updates**: Keep project documentation current
+- **API Documentation**: Document data structures
+
+### Change Documentation
+- **Changelog**: Record all significant changes
+- **Migration Guides**: Document breaking changes
+- **Update Procedures**: Document data update processes
