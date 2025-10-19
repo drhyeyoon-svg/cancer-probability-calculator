@@ -499,6 +499,24 @@ select:disabled {
     text-align: center;
 }
 
+/* 데이터 출처 안내 */
+.data-source-note {
+    background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    border: 1px solid #2196f3;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin: 15px 0 0 0;
+}
+
+.data-source-note p {
+    color: #0d47a1;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin: 0;
+    text-align: center;
+    line-height: 1.5;
+}
+
 /* 모든암 특별 스타일 */
 .result-table .all-cancer-row {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
