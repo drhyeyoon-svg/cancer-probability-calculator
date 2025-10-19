@@ -1178,26 +1178,26 @@ const DisplayManager = {
             return;
         }
         
-        if (!lifeData?.current && !lifeData?.average) {
+        if (!lifeData?.current) {
             console.warn('생명표 데이터가 없습니다.');
             container.innerHTML = '<p class="no-data">생명표 데이터가 없습니다.</p>';
             return;
         }
         
-        const data = currentLifeTab === 'life-current' ? lifeData.current : lifeData.average;
-        console.log('선택된 데이터:', data);
+        // 항상 2023년 생명표 데이터만 표시 (탭과 무관)
+        const data = lifeData.current;
+        console.log('2023년 생명표 데이터 사용 (탭 무관):', data);
         
         if (!data) {
-            console.warn('선택된 탭의 데이터가 없습니다.');
-            container.innerHTML = '<p class="no-data">선택된 탭의 데이터가 없습니다.</p>';
+            console.warn('2023년 생명표 데이터가 없습니다.');
+            container.innerHTML = '<p class="no-data">생명표 데이터가 없습니다.</p>';
             return;
         }
         
         const genderLabel = gender === 'male' ? '남성' : '여성';
-        const tabLabel = currentLifeTab === 'life-current' ? '2023년 생명표' : '5개년 평균';
         
         container.innerHTML = `
-            <h4>${age}세 ${genderLabel} ${tabLabel}</h4>
+            <h4>${age}세 ${genderLabel} 2023년 생명표</h4>
             <div class="life-table-grid">
                 <div class="life-table-item">
                     <div class="label">기대여명</div>
@@ -1905,14 +1905,11 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (tabType === 'life-current' || tabType === 'life-average') {
                 currentLifeTab = tabType;
                 
-                // 생명표 데이터 재표시
+                // 사망원인 데이터만 재표시 (생명표 정보는 탭과 무관하게 고정)
                 const age = parseInt(ELEMENTS.age().value);
                 const gender = ELEMENTS.gender().value;
                 
                 if (Utils.isValidAge(age) && Utils.isValidGender(gender)) {
-                    const lifeData = DataProcessor.getLifeTableData(age, gender);
-                    DisplayManager.displayLifeTableInfo(age, gender, lifeData);
-                    
                     const results = DataProcessor.searchDeathData(age, gender);
                     if (results.length > 0) {
                         DisplayManager.displayResults(results, 'deathResults', 'death');
