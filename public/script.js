@@ -1015,16 +1015,23 @@ const DisplayManager = {
         // 사망 데이터와 암 데이터를 다르게 처리
         if (type === 'death') {
             console.log('=== 사망 데이터 처리 시작 ===');
+            console.log('현재 생명표 탭:', currentLifeTab);
+            
+            // 5개년 평균 탭인지 확인
+            const is5YearAverage = currentLifeTab === 'life-average';
+            console.log('5개년 평균 탭:', is5YearAverage);
+            
             // 사망 데이터는 모든암 분리 없이 바로 순위 표시
+            // 5개년 평균일 때는 average5Year 필드 사용
             const sortedData = [...data].sort((a, b) => {
-                const rateA = a.rate || 0;
-                const rateB = b.rate || 0;
+                const rateA = is5YearAverage ? (a.average5Year || a.rate || 0) : (a.rate || 0);
+                const rateB = is5YearAverage ? (b.average5Year || b.rate || 0) : (b.rate || 0);
                 return rateB - rateA;
             });
             
             console.log('정렬된 사망 데이터 상위 5개:', sortedData.slice(0, 5).map(item => ({
                 name: item.name,
-                rate: item.rate
+                rate: is5YearAverage ? item.average5Year : item.rate
             })));
             
             const limitedData = limit === 'all' ? sortedData : sortedData.slice(0, parseInt(limit));
@@ -1033,7 +1040,9 @@ const DisplayManager = {
             let html = '<table><thead><tr><th>순위</th><th>항목</th><th>확률</th></tr></thead><tbody>';
             
             limitedData.forEach((item, index) => {
-                const displayRate = `${item.rate.toFixed(4)}%`;
+                // 5개년 평균일 때는 average5Year 필드 사용
+                const rateValue = is5YearAverage ? (item.average5Year || item.rate) : item.rate;
+                const displayRate = `${rateValue.toFixed(4)}%`;
                 
                 html += `<tr>
                     <td>${index + 1}</td>
