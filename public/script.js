@@ -917,7 +917,7 @@ const DataProcessor = {
         console.log('사망 데이터 연령대:', ageGroup);
         
         // 현재 탭에 따라 적절한 데이터 소스 선택
-        const dataSource = (currentTab === 'current') 
+        const dataSource = (currentLifeTab === 'life-current') 
             ? (typeof deathData2022 !== 'undefined' ? deathData2022 : deathData) 
             : (typeof deathData5Year !== 'undefined' ? deathData5Year : deathData);
         
