@@ -49,5 +49,36 @@ BUG_FIX_REPORT.md
 DATA_UPDATE_GUIDE.md
 README-NODEJS.md
 
-# 중복???�위 ?�더
+# 중복된 하위 폴더
 cancer-probability-calculator/
+
+# 사용자 홈 디렉토리의 다른 파일/폴더 (git이 홈 디렉토리에 초기화된 경우)
+/.android/
+/.chocolatey/
+/.cursor/
+/.dotnet/
+/.gitconfig
+/.ipython/
+/.lesshst
+/.python_history  
+/2D_game_project/
+/2D_Game_Project_current/
+/3D Project Game/
+/AppData/
+/Contacts/
+/Documents/
+/Downloads/
+/Favorites/
+/GameMakerProjects/
+/Links/
+/Music/
+/My project/
+/my-project/
+/NTUSER.DAT*
+/ntuser.dat*
+/OneDrive/
+/Saved Games/
+/Searches/
+/source/
+/VampireSurvivorLikeTutorial/
+/Videos/
