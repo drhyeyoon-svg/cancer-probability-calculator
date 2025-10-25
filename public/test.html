@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데이터 로드 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-box {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 데이터 파일 로드 테스트</h1>
+    
+    <div class="test-box">
+        <h2>1. cancerData 확인</h2>
+        <div id="cancerDataTest">로딩 중...</div>
+    </div>
+    
+    <div class="test-box">
+        <h2>2. deathData 확인</h2>
+        <div id="deathDataTest">로딩 중...</div>
+    </div>
+    
+    <div class="test-box">
+        <h2>3. lifeTableData 확인</h2>
+        <div id="lifeTableDataTest">로딩 중...</div>
+    </div>
+    
+    <div class="test-box">
+        <h2>4. riskFactorsData 확인</h2>
+        <div id="riskFactorsDataTest">로딩 중...</div>
+    </div>
+
+    <!-- 데이터 파일 로드 -->
+    <script src="cancer-data.js"></script>
+    <script src="death-data.js"></script>
+    <script src="life-table-data.js"></script>
+    <script src="risk-factors-data.js"></script>
+    
+    <!-- 테스트 스크립트 -->
+    <script>
+        function testData() {
+            // cancerData 테스트
+            const cancerTest = document.getElementById('cancerDataTest');
+            if (typeof cancerData !== 'undefined' && cancerData) {
+                const maleKeys = Object.keys(cancerData.male || {});
+                const femaleKeys = Object.keys(cancerData.female || {});
+                cancerTest.innerHTML = `
+                    <span class="success">✅ 성공!</span><br>
+                    남성 연령대: ${maleKeys.length}개<br>
+                    여성 연령대: ${femaleKeys.length}개<br>
+                    <pre>연령대: ${maleKeys.join(', ')}</pre>
+                `;
+            } else {
+                cancerTest.innerHTML = '<span class="error">❌ 실패: cancerData가 정의되지 않았습니다.</span>';
+            }
+            
+            // deathData 테스트
+            const deathTest = document.getElementById('deathDataTest');
+            if (typeof deathData !== 'undefined' && deathData) {
+                const maleKeys = Object.keys(deathData.male || {});
+                const femaleKeys = Object.keys(deathData.female || {});
+                deathTest.innerHTML = `
+                    <span class="success">✅ 성공!</span><br>
+                    남성 연령대: ${maleKeys.length}개<br>
+                    여성 연령대: ${femaleKeys.length}개<br>
+                    <pre>연령대: ${maleKeys.join(', ')}</pre>
+                `;
+            } else {
+                deathTest.innerHTML = '<span class="error">❌ 실패: deathData가 정의되지 않았습니다.</span>';
+            }
+            
+            // lifeTableData 테스트
+            const lifeTest = document.getElementById('lifeTableDataTest');
+            if (typeof lifeTableData !== 'undefined' && lifeTableData) {
+                const maleKeys = Object.keys(lifeTableData.male || {});
+                const femaleKeys = Object.keys(lifeTableData.female || {});
+                lifeTest.innerHTML = `
+                    <span class="success">✅ 성공!</span><br>
+                    남성 연령: ${maleKeys.length}개<br>
+                    여성 연령: ${femaleKeys.length}개<br>
+                    <pre>일부 연령: ${maleKeys.slice(0, 10).join(', ')}...</pre>
+                `;
+            } else {
+                lifeTest.innerHTML = '<span class="error">❌ 실패: lifeTableData가 정의되지 않았습니다.</span>';
+            }
+            
+            // riskFactorsData 테스트
+            const riskTest = document.getElementById('riskFactorsDataTest');
+            if (typeof riskFactorsData !== 'undefined' && riskFactorsData) {
+                const cancerTypes = Object.keys(riskFactorsData);
+                riskTest.innerHTML = `
+                    <span class="success">✅ 성공!</span><br>
+                    암 종류: ${cancerTypes.length}개<br>
+                    <pre>${cancerTypes.slice(0, 5).join(', ')}...</pre>
+                `;
+            } else {
+                riskTest.innerHTML = '<span class="error">❌ 실패: riskFactorsData가 정의되지 않았습니다.</span>';
+            }
+        }
+        
+        // 페이지 로드 완료 후 테스트 실행
+        window.addEventListener('load', testData);
+    </script>
+</body>
+</html>
+
