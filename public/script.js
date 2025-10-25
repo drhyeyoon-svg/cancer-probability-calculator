@@ -890,11 +890,14 @@ const RiskFactorManager = {
 
 const DataProcessor = {
     searchCancerData(age, gender) {
+        console.log('🔍 searchCancerData 호출:', { age, gender });
+        
         if (!DataManager.checkDataLoaded() || !Utils.isValidAge(age) || !Utils.isValidGender(gender)) {
             return [];
         }
         
         const ageGroup = Utils.getAgeGroup(age);
+        console.log('📊 연령대:', ageGroup);
         
         // currentTab에 따라 다른 데이터 소스 사용
         let data;
@@ -916,7 +919,10 @@ const DataProcessor = {
             console.log('=== 2022년 데이터 사용 ===');
             data = cancerData[gender]?.[ageGroup] || [];
             console.log('2022년 데이터 사용됨, 항목 수:', data.length);
+            console.log('첫 3개 항목:', data.slice(0, 3).map(d => d.name));
         }
+        
+        console.log('⚠️ 필터링 전 데이터:', data.length, '개');
         
         // 성별에 맞지 않는 암 필터링
         const filteredData = data.filter(item => {
@@ -940,6 +946,9 @@ const DataProcessor = {
             
             return true;
         });
+        
+        console.log('✅ 필터링 후 데이터:', filteredData.length, '개');
+        console.log('필터링된 첫 3개:', filteredData.slice(0, 3).map(d => d.name));
         
         return filteredData.sort((a, b) => {
             const rateA = a.rate || 0;
