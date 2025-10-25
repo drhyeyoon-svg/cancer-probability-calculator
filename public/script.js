@@ -370,29 +370,24 @@ const DataManager = {
     checkDataLoaded() {
         console.log('데이터 로드 상태 확인 중...');
         
-        // 필수 데이터만 체크 (백업 파일들은 선택사항)
         const requiredData = [
-            { name: 'cancerData', data: typeof cancerData !== 'undefined', required: true },
-            { name: 'deathData', data: typeof deathData !== 'undefined', required: true },
-            { name: 'lifeTableData', data: typeof lifeTableData !== 'undefined', required: true }
-        ];
-        
-        // 선택적 데이터 (없어도 작동 가능)
-        const optionalData = [
+            { name: 'cancerData', data: typeof cancerData !== 'undefined' },
             { name: 'cancerData5Year', data: typeof cancerData5Year !== 'undefined' },
+            { name: 'deathData', data: typeof deathData !== 'undefined' },
             { name: 'deathData2022', data: typeof deathData2022 !== 'undefined' },
             { name: 'deathData5Year', data: typeof deathData5Year !== 'undefined' },
+            { name: 'lifeTableData', data: typeof lifeTableData !== 'undefined' },
             { name: 'completeLifeTable2023', data: typeof completeLifeTable2023 !== 'undefined' }
         ];
         
-        console.log('=== 필수 데이터 로드 상태 ===');
+        console.log('=== 데이터 로드 상태 상세 확인 ===');
         for (const item of requiredData) {
             console.log(`${item.name}: ${item.data ? '✅ 로드됨' : '❌ 로드 실패'}`);
             if (item.data) {
                 // 데이터 구조 간단 확인
                 const dataObj = eval(item.name);
                 if (dataObj && typeof dataObj === 'object') {
-                    console.log(`  ${item.name} 키들:`, Object.keys(dataObj).slice(0, 5));
+                    console.log(`  ${item.name} 키들:`, Object.keys(dataObj));
                     if (dataObj.male || dataObj.female) {
                         console.log(`  성별 데이터:`, {
                             male: !!dataObj.male,
@@ -401,11 +396,6 @@ const DataManager = {
                     }
                 }
             }
-        }
-        
-        console.log('=== 선택적 데이터 로드 상태 ===');
-        for (const item of optionalData) {
-            console.log(`${item.name}: ${item.data ? '✅ 로드됨' : '⚠️  없음 (선택사항)'}`);
         }
         
         for (const item of requiredData) {
