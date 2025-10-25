@@ -918,7 +918,30 @@ const DataProcessor = {
             console.log('2022년 데이터 사용됨, 항목 수:', data.length);
         }
         
-        return [...data].sort((a, b) => {
+        // 성별에 맞지 않는 암 필터링
+        const filteredData = data.filter(item => {
+            const name = item.name.toLowerCase();
+            
+            // 여성인 경우 남성 전용 암 제외
+            if (gender === 'female') {
+                if (name.includes('전립선') || name.includes('prostate')) {
+                    return false;
+                }
+            }
+            
+            // 남성인 경우 여성 전용 암 제외
+            if (gender === 'male') {
+                if (name.includes('자궁') || name.includes('cervix') || 
+                    name.includes('난소') || name.includes('ovary') ||
+                    name.includes('유방') || name.includes('breast')) {
+                    return false;
+                }
+            }
+            
+            return true;
+        });
+        
+        return filteredData.sort((a, b) => {
             const rateA = a.rate || 0;
             const rateB = b.rate || 0;
             return rateB - rateA;
