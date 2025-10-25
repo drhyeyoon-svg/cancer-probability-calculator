@@ -8,20 +8,8 @@
       "dest": "/cancer-data.js"
     },
     {
-      "src": "/cancer-data-5year.js",
-      "dest": "/cancer-data-5year.js"
-    },
-    {
-      "src": "/death-data-2022.js",
-      "dest": "/death-data-2022.js"
-    },
-    {
-      "src": "/death-data-5year.js",
-      "dest": "/death-data-5year.js"
-    },
-    {
-      "src": "/complete-life-table-2023.js",
-      "dest": "/complete-life-table-2023.js"
+      "src": "/death-data.js",
+      "dest": "/death-data.js"
     },
     {
       "src": "/life-table-data.js",
@@ -44,4 +32,3 @@
     }
   ]
 }
-
