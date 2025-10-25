@@ -1,34 +1,4 @@
 {
-  "public": true,
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "routes": [
-    {
-      "src": "/cancer-data.js",
-      "dest": "/cancer-data.js"
-    },
-    {
-      "src": "/death-data.js",
-      "dest": "/death-data.js"
-    },
-    {
-      "src": "/life-table-data.js",
-      "dest": "/life-table-data.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/public/$1"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*\\.js)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript; charset=utf-8"
-        }
-      ]
-    }
-  ]
+  "buildCommand": null,
+  "outputDirectory": "public"
 }
