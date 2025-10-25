@@ -1,0 +1,55 @@
+// ============================================================================
+// OR 계산 방식 백업 (2025년 변경 전)
+// ============================================================================
+
+// 기존 방식: 여러 위험인자 중 최대 OR만 사용
+
+calculateAdjustedRates() {
+    console.log('=== calculateAdjustedRates 시작 ===');
+    console.log('선택된 위험인자 수:', this.selectedRiskFactors.length);
+    console.log('기본 암 발생률 수:', Object.keys(this.baseCancerRates).length);
+    
+    // 초기화
+    Object.keys(this.baseCancerRates).forEach(cancerName => {
+        this.adjustedCancerRates[cancerName] = this.baseCancerRates[cancerName];
+        this.oddsRatios[cancerName] = 1.0;
+    });
+    
+    if (this.selectedRiskFactors.length === 0) {
+        console.log('선택된 위험인자가 없어 계산 종료');
+        return;
+    }
+    
+    console.log('riskFactorData 존재:', typeof riskFactorData !== 'undefined');
+    
+    // 위험인자별 odds ratio 적용
+    this.selectedRiskFactors.forEach(riskFactor => {
+        console.log(`위험인자 처리 중: ${riskFactor}`);
+        
+        if (typeof riskFactorData !== 'undefined' && riskFactorData[riskFactor]) {
+            const riskData = riskFactorData[riskFactor];
+            console.log(`  ${riskFactor} 데이터:`, riskData);
+            
+            riskData.forEach(risk => {
+                const targetCancer = this.findMatchingCancer(risk.cancer);
+                console.log(`  매칭 시도: ${risk.cancer} → ${targetCancer || '매칭 실패'}`);
+                
+                if (targetCancer && this.baseCancerRates[targetCancer]) {
+                    // ★★★ 여러 위험인자가 겹치는 경우 최대값만 적용 (곱하기 대신 max 사용) ★★★
+                    this.oddsRatios[targetCancer] = Math.max(this.oddsRatios[targetCancer], risk.effect);
+                    this.adjustedCancerRates[targetCancer] = 
+                        this.baseCancerRates[targetCancer] * this.oddsRatios[targetCancer];
+                    
+                    console.log(`  ✅ ${targetCancer}: 기본 ${this.baseCancerRates[targetCancer]} → 보정 ${this.adjustedCancerRates[targetCancer]} (OR: ${this.oddsRatios[targetCancer]})`);
+                } else {
+                    console.log(`  ❌ 매칭 실패 또는 기본률 없음: ${targetCancer}`);
+                }
+            });
+        } else {
+            console.log(`  ❌ ${riskFactor} 데이터 없음`);
+        }
+    });
+    
+    console.log('=== calculateAdjustedRates 완료 ===');
+}
+

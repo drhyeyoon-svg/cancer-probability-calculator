@@ -1,0 +1,47 @@
+{
+  "public": true,
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "routes": [
+    {
+      "src": "/cancer-data.js",
+      "dest": "/cancer-data.js"
+    },
+    {
+      "src": "/cancer-data-5year.js",
+      "dest": "/cancer-data-5year.js"
+    },
+    {
+      "src": "/death-data-2022.js",
+      "dest": "/death-data-2022.js"
+    },
+    {
+      "src": "/death-data-5year.js",
+      "dest": "/death-data-5year.js"
+    },
+    {
+      "src": "/complete-life-table-2023.js",
+      "dest": "/complete-life-table-2023.js"
+    },
+    {
+      "src": "/life-table-data.js",
+      "dest": "/life-table-data.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/public/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*\\.js)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/javascript; charset=utf-8"
+        }
+      ]
+    }
+  ]
+}
+

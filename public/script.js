@@ -13,10 +13,11 @@ if (typeof riskFactorData === 'undefined') {
     
     window.riskFactorData = {
         "흡연": [
-            { cancer: "폐", effect: 4.0 },
+            { cancer: "폐", effect: 6.0 },
             { cancer: "위", effect: 1.5 },
             { cancer: "방광", effect: 3.0 },
-            { cancer: "신장", effect: 1.5 }
+            { cancer: "신장", effect: 1.5 },
+            { cancer: "췌장", effect: 1.7 }
         ],
         "음주": [
             { cancer: "대장", effect: 1.5 },
@@ -41,6 +42,10 @@ if (typeof riskFactorData === 'undefined') {
         ],
         "C형간염": [
             { cancer: "간", effect: 20.0 }
+        ],
+        "담석증": [
+            { cancer: "담낭암", effect: 7.0 },
+            { cancer: "담도암", effect: 4.0 }
         ],
         "유방암 가족력": [
             { cancer: "유방", effect: 5.0 }
@@ -157,7 +162,7 @@ class UserCancerRiskCalculator {
     }
     
     calculateAdjustedRates() {
-        console.log('=== calculateAdjustedRates 시작 ===');
+        console.log('=== calculateAdjustedRates 시작 (시너지 보간 방식) ===');
         console.log('선택된 위험인자 수:', this.selectedRiskFactors.length);
         console.log('기본 암 발생률 수:', Object.keys(this.baseCancerRates).length);
         
@@ -174,7 +179,9 @@ class UserCancerRiskCalculator {
         
         console.log('riskFactorData 존재:', typeof riskFactorData !== 'undefined');
         
-        // 위험인자별 odds ratio 적용
+        // 각 암종별로 해당하는 위험인자 OR들을 수집
+        const cancerORs = {}; // { "암종명": [OR1, OR2, ...] }
+        
         this.selectedRiskFactors.forEach(riskFactor => {
             console.log(`위험인자 처리 중: ${riskFactor}`);
             
@@ -187,12 +194,12 @@ class UserCancerRiskCalculator {
                     console.log(`  매칭 시도: ${risk.cancer} → ${targetCancer || '매칭 실패'}`);
                     
                     if (targetCancer && this.baseCancerRates[targetCancer]) {
-                        // 여러 위험인자가 겹치는 경우 최대값만 적용 (곱하기 대신 max 사용)
-                        this.oddsRatios[targetCancer] = Math.max(this.oddsRatios[targetCancer], risk.effect);
-                        this.adjustedCancerRates[targetCancer] = 
-                            this.baseCancerRates[targetCancer] * this.oddsRatios[targetCancer];
-                        
-                        console.log(`  ✅ ${targetCancer}: 기본 ${this.baseCancerRates[targetCancer]} → 보정 ${this.adjustedCancerRates[targetCancer]} (OR: ${this.oddsRatios[targetCancer]})`);
+                        // 해당 암종의 OR 목록에 추가
+                        if (!cancerORs[targetCancer]) {
+                            cancerORs[targetCancer] = [];
+                        }
+                        cancerORs[targetCancer].push(risk.effect);
+                        console.log(`  ✅ ${targetCancer}에 OR ${risk.effect} 추가됨`);
                     } else {
                         console.log(`  ❌ 매칭 실패 또는 기본률 없음: ${targetCancer}`);
                     }
@@ -200,6 +207,40 @@ class UserCancerRiskCalculator {
             } else {
                 console.log(`  ❌ ${riskFactor} 데이터 없음`);
             }
+        });
+        
+        // 각 암종별로 최종 OR 계산 (시너지 보간 방식)
+        const SYNERGY_FACTOR = 0.2; // 추가 위험인자 시너지 강도
+        
+        Object.keys(cancerORs).forEach(cancerName => {
+            const ors = cancerORs[cancerName];
+            
+            if (ors.length === 1) {
+                // 위험인자가 1개만 있는 경우: 그대로 사용
+                this.oddsRatios[cancerName] = ors[0];
+            } else {
+                // 위험인자가 2개 이상인 경우: 최대 OR + 추가 OR들의 시너지
+                ors.sort((a, b) => b - a); // 내림차순 정렬
+                const maxOR = ors[0];
+                let finalOR = maxOR;
+                
+                // 추가 위험인자들에 대해 시너지 보간 적용
+                for (let i = 1; i < ors.length; i++) {
+                    const additionalOR = ors[i];
+                    const synergy = (additionalOR - 1) * SYNERGY_FACTOR;
+                    finalOR += synergy;
+                    console.log(`  추가 위험인자 ${i}: OR ${additionalOR} → 시너지 +${synergy.toFixed(2)}`);
+                }
+                
+                this.oddsRatios[cancerName] = finalOR;
+                console.log(`  ${cancerName}: ${ors.length}개 위험인자 (${ors.join(', ')}) → 최종 OR: ${finalOR.toFixed(2)}`);
+            }
+            
+            // 보정된 발생률 계산
+            this.adjustedCancerRates[cancerName] = 
+                this.baseCancerRates[cancerName] * this.oddsRatios[cancerName];
+            
+            console.log(`  ${cancerName}: 기본 ${this.baseCancerRates[cancerName]} → 보정 ${this.adjustedCancerRates[cancerName]} (OR: ${this.oddsRatios[cancerName].toFixed(2)})`);
         });
         
         console.log('=== calculateAdjustedRates 완료 ===');
@@ -739,7 +780,8 @@ const RiskFactorManager = {
                 { name: "H. pylori 감염", description: "위암 위험 증가" },
                 { name: "HPV 감염", description: "자궁경부암 위험 증가" },
                 { name: "B형간염", description: "간암 위험 증가" },
-                { name: "C형간염", description: "간암 위험 증가" }
+                { name: "C형간염", description: "간암 위험 증가" },
+                { name: "담석증", description: "담낭암 위험 7배, 담도암 위험 4배 증가" }
             ],
             family: [
                 { name: "유방암 가족력", description: "유방암 위험 5배 증가" },
@@ -863,29 +905,6 @@ const DataProcessor = {
             if (typeof cancerData5Year !== 'undefined' && cancerData5Year[gender]?.[ageGroup]) {
                 data = cancerData5Year[gender][ageGroup];
                 console.log('5개년 평균 데이터 사용됨, 항목 수:', data.length);
-                
-                // 5개년 평균 데이터에 항목이 부족한 경우, 2022년 데이터의 average5Year로 보완
-                const data2022 = cancerData[gender]?.[ageGroup] || [];
-                if (data.length < data2022.length) {
-                    console.log('5개년 평균 데이터 보완 중...');
-                    
-                    // 5개년 평균에 없는 암종들을 2022년 데이터에서 가져오기
-                    const existingNames = new Set(data.map(c => c.name));
-                    
-                    data2022.forEach(cancer2022 => {
-                        if (!existingNames.has(cancer2022.name) && cancer2022.average5Year) {
-                            data.push({
-                                name: cancer2022.name,
-                                rate: cancer2022.average5Year
-                            });
-                        }
-                    });
-                    
-                    // 발생률 순으로 재정렬
-                    data.sort((a, b) => (b.rate || 0) - (a.rate || 0));
-                    
-                    console.log('보완 후 항목 수:', data.length);
-                }
             } else {
                 data = cancerData[gender]?.[ageGroup] || [];
                 console.log('⚠️ 5개년 평균 데이터 없음, 2022년 데이터 사용됨');
@@ -1031,7 +1050,7 @@ const DisplayManager = {
             
             console.log('정렬된 사망 데이터 상위 5개:', sortedData.slice(0, 5).map(item => ({
                 name: item.name,
-                rate: is5YearAverage ? item.average5Year : item.rate
+                rate: is5YearAverage ? (item.average5Year || item.rate) : item.rate
             })));
             
             const limitedData = limit === 'all' ? sortedData : sortedData.slice(0, parseInt(limit));
@@ -1164,7 +1183,15 @@ const DisplayManager = {
         });
         
         html += '</tbody></table>';
+        
+        console.log(`=== displayResults HTML 설정 직전 ===`);
+        console.log(`컨테이너 ID: ${containerId}`);
+        console.log(`현재 컨테이너 내용 길이: ${container.innerHTML.length}`);
+        console.log(`새로운 HTML 길이: ${html.length}`);
+        
         container.innerHTML = html;
+        
+        console.log(`HTML 설정 완료, 새로운 내용 길이: ${container.innerHTML.length}`);
     },
     
     displayLifeTableInfo(age, gender, lifeData) {

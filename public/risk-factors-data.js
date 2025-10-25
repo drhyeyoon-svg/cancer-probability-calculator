@@ -15,13 +15,14 @@ const riskFactorCategories = {
 
 const riskFactorData = {
     "흡연": [
-        { cancer: "폐암", effect: 4.0 },
+        { cancer: "폐암", effect: 6.0 },
         { cancer: "위암", effect: 1.5 },
         { cancer: "방광암", effect: 3.0 },
         { cancer: "신장암", effect: 1.5 },
         { cancer: "자궁경부암", effect: 1.5 },
         { cancer: "구강·인두암", effect: 10.0 },
-        { cancer: "후두암", effect: 5.0 }
+        { cancer: "후두암", effect: 5.0 },
+        { cancer: "췌장암", effect: 1.7 }
     ],
     "음주": [
         { cancer: "대장암", effect: 1.5 },
